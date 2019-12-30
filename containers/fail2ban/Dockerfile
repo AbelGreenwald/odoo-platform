@@ -4,7 +4,7 @@ LABEL maintainer="Abel Greenwald"
 
 EXPOSE 80 443
 
-ENV DHLEVEL=4096
+ENV DHLEVEL=2048
 ENV URL=abelswork.net
 ENV SUBDOMAINS=www,notebook
 ENV EXTRA_DOMAINS=abelswork.com,www.abelswork.com,notebook.abelswork.com
@@ -12,7 +12,7 @@ ENV ONLY_SUBDOMAINS=false
 ENV EMAIL="abel.greenwald@gmail.com"
 ENV VALIDATION=dns
 ENV DNSPLUGIN=route53
-ENV STAGING false
+ENV STAGING true
 
 RUN apk add nginx-mod-http-geoip
 
