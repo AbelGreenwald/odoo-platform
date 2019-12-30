@@ -1,0 +1,3 @@
+*.mmdb
+**/route53.ini
+**/certbot/conf/*

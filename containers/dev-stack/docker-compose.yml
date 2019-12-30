@@ -1,0 +1,55 @@
+version: '3'
+services:
+  fail2ban:
+    image: fail2ban:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - "frontend"
+      - "backend"
+  notebook:
+    image: jupyter/base-notebook
+    ports:
+      - "8888:8888"
+    networks:
+      - "frontend"
+      - "backend"
+  haproxy:
+    image: haproxy:latest
+    ports:
+      - "8080:8080"
+      - "8069:8069"
+      - "9000:9000"
+    networks:
+      - "frontend"
+      - "backend"
+    depends_on:
+      - "odoo"
+      - "notebook"
+  odoo:
+    image: odoo:latest
+    networks:
+      - "frontend"
+      - "backend"
+    depends_on:
+      - "postgres"
+  postgres:
+    image: postgres:10.3
+    environment:
+      PGDATA: /mnt/postgres/pgdata
+      POSTGRES_DB: odoo
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: test
+    volumes:
+       - pgdata:/mnt/postgres/pgdata
+    ports:
+      - "5432:5432"
+    networks:
+      - "frontend"
+      - "backend"
+volumes:
+  pgdata:
+networks:
+  frontend:
+  backend:
